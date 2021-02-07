@@ -1,18 +1,11 @@
+<!DOCTYPE html>
 <?php
+
 include('controller.php');
 $lib = new Library();
 $data_stock = $lib->show();
 
-if(isset($_GET['hapus_stock'])){
-    $id = $_GET['hapus_stock'];
-    $status = $lib->delete($id);
-    if($status)
-    {
-        header('Loacation: table.php');
-    }
-}
 ?>
-<!DOCTYPE html>
 <html lang='en'>
 <head>
     <style>
@@ -30,6 +23,7 @@ if(isset($_GET['hapus_stock'])){
             font-weight: 500;
         }
         table {
+            width: 100%;
             border: none;
             border-color: #dee2e6;
         }
@@ -40,19 +34,22 @@ if(isset($_GET['hapus_stock'])){
 </head>
 <body>
 <table border=1>
-    <tr>
-        <th class="thborder"></th>
-        <th><span class="head">No</span></th>
-        <th><span class="head">Mat. Id</span></th>
-        <th><span class="head">Mat. Group</span></th>
-        <th><span class="head">St. Mat</span></th>
-        <th><span class="head">Name</span></th>
-        <th><span class="head">Stype</span></th>
-        <th><span class="head">Sbin</span></th>
-        <th><span class="head">Qty. Case</span></th>
-        <th><span class="head">Sys. Case</span></th>
-        <th><span class="head">Dif. Pack</span></th>
-    </tr>
+    <thead style="background: #f8f9fa;">
+        <tr>
+            <th class="thborder"></th>
+            <th><span class="head">No</span></th>
+            <th><span class="head">Mat. Id</span></th>
+            <th><span class="head">Mat. Group</span></th>
+            <th><span class="head">St. Mat</span></th>
+            <th><span class="head">Name</span></th>
+            <th><span class="head">Stype</span></th>
+            <th><span class="head">Sbin</span></th>
+            <th><span class="head">Qty. Case</span></th>
+            <th><span class="head">Sys. Case</span></th>
+            <th><span class="head">Dif. Pack</span></th>
+            <th><span class="head">Action</span></th>
+        </tr>
+    </thead>
     <?php
     $no = 1;
     foreach($data_stock as $row){
@@ -69,6 +66,7 @@ if(isset($_GET['hapus_stock'])){
         <td><span><?php echo $row['Quantity_Case']; ?></span></td>
         <td><span><?php echo $row['Sys_Pack']; ?></span></td>
         <td><span><?php echo $row['Sys_Pack']-$row['Quantity_Case'] ?></span></td>
+        <td><span><?php echo "<span><a style='color: #dc3545;' href='index.php?hapus_stock=".$row['id']."'>Delete  </a></span><span><a style='color: #28a745;' href='edit.php?update_stock=".$row['id']."'>Update</a></span>" ?></span></td>
     </tr>
     <?php
     }
